@@ -1,0 +1,46 @@
+name: Update Plugin Registry
+
+on:
+  schedule:
+    - cron: '0 * * * *' # 每小时运行一次
+  workflow_dispatch:      # 允许手动触发
+
+jobs:
+  update-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Store Repo
+        uses: actions/checkout@v4
+
+      - name: Get Latest Release Info
+        id: get_release
+        run: |
+          # 1. 获取 GitHub API 的 Release 元数据
+          RELEASE_JSON=$(curl -s https://api.github.com/repos/panyiwei-home/Freedeck/releases/latest)
+          
+          # 2. 提取版本号 (去掉可能的 'v' 前缀)
+          LATEST_TAG=$(echo "$RELEASE_JSON" | jq -r .tag_name | sed 's/v//g')
+          
+          # 3. 动态提取 .zip 文件的下载链接
+          # 逻辑：在 assets 数组中找到名字以 .zip 结尾的第一个文件的 browser_download_url
+          DOWNLOAD_URL=$(echo "$RELEASE_JSON" | jq -r '.assets[] | select(.name | endswith(".zip")) | .browser_download_url' | head -n 1)
+          
+          echo "latest_version=$LATEST_TAG" >> $GITHUB_OUTPUT
+          echo "download_url=$DOWNLOAD_URL" >> $GITHUB_OUTPUT
+
+      - name: Update plugins.json
+        run: |
+          NEW_VER="${{ steps.get_release.outputs.latest_version }}"
+          NEW_URL="${{ steps.get_release.outputs.download_url }}"
+          
+          # 使用 jq 同时更新 version 和 url 两个字段
+          jq --arg ver "$NEW_VER" --arg url "$NEW_URL" \
+          '.[0].version = $ver | .[0].url = $url' \
+          plugins.json > tmp.json && mv tmp.json plugins.json
+          
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Github Action"
+          git config --global user.email "action@github.com"
+          git add plugins.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update Freedeck to $NEW_VER" && git push)
