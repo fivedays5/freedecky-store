@@ -2,10 +2,10 @@
   {
     "id": "freedeck",
     "name": "Freedeck",
-    "description": "A third-party plugin for Steam Deck.",
+    "description": "通过局域网在设备间传输文件到 Steam Deck",
     "author": "panyiwei-home",
     "version": "0.5.1",
     "url": "https://github.com/panyiwei-home/Freedeck/releases/download/0.5.1/freedeck.v.0.5.1.zip",
-    "manifest": "https://raw.githubusercontent.com/panyiwei-home/Freedeck/main/plugin.json"
+    "manifest": "https://raw.githubusercontent.com/fivedays5/freedecky-store/main/freedeck_manifest.json"
   }
 ]

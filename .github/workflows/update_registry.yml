@@ -28,15 +28,19 @@ jobs:
           echo "latest_version=$LATEST_TAG" >> $GITHUB_OUTPUT
           echo "download_url=$DOWNLOAD_URL" >> $GITHUB_OUTPUT
 
-      - name: Update plugins.json
+      - name: Update plugins.json and manifest
         run: |
           NEW_VER="${{ steps.get_release.outputs.latest_version }}"
           NEW_URL="${{ steps.get_release.outputs.download_url }}"
           
-          # 确保包含 id 字段并更新 version 和 url
+          # 更新商店索引
           jq --arg ver "$NEW_VER" --arg url "$NEW_URL" \
-          '.[0].id = "freedeck" | .[0].version = $ver | .[0].url = $url' \
+          '.[0].version = $ver | .[0].url = $url' \
           plugins.json > tmp.json && mv tmp.json plugins.json
+          
+          # 更新修补版 Manifest 的版本号
+          jq --arg ver "$NEW_VER" '.version = $ver' \
+          freedeck_manifest.json > tmp2.json && mv tmp2.json freedeck_manifest.json
           
       - name: Commit and Push
         run: |
