@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Freedeck",
+    "description": "A third-party plugin for Steam Deck.",
+    "author": "panyiwei-home",
+    "version": "0.5.1",
+    "url": "https://github.com/panyiwei-home/Freedeck/releases/latest/download/Freedeck.zip",
+    "manifest": "https://raw.githubusercontent.com/panyiwei-home/Freedeck/main/plugin.json"
+  }
+]
