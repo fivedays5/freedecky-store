@@ -1,5 +1,6 @@
 [
   {
+    "id": "freedeck",
     "name": "Freedeck",
     "description": "A third-party plugin for Steam Deck.",
     "author": "panyiwei-home",

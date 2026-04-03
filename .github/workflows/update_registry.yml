@@ -33,9 +33,9 @@ jobs:
           NEW_VER="${{ steps.get_release.outputs.latest_version }}"
           NEW_URL="${{ steps.get_release.outputs.download_url }}"
           
-          # 使用 jq 同时更新 version 和 url 两个字段
+          # 确保包含 id 字段并更新 version 和 url
           jq --arg ver "$NEW_VER" --arg url "$NEW_URL" \
-          '.[0].version = $ver | .[0].url = $url' \
+          '.[0].id = "freedeck" | .[0].version = $ver | .[0].url = $url' \
           plugins.json > tmp.json && mv tmp.json plugins.json
           
       - name: Commit and Push
