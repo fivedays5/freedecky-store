@@ -4,7 +4,7 @@
     "description": "A third-party plugin for Steam Deck.",
     "author": "panyiwei-home",
     "version": "0.5.1",
-    "url": "https://github.com/panyiwei-home/Freedeck/releases/latest/download/Freedeck.zip",
+    "url": "https://github.com/panyiwei-home/Freedeck/releases/download/0.5.1/freedeck.v.0.5.1.zip",
     "manifest": "https://raw.githubusercontent.com/panyiwei-home/Freedeck/main/plugin.json"
   }
 ]
