@@ -4,8 +4,8 @@
     "name": "Freedeck",
     "description": "通过局域网在设备间传输文件到 Steam Deck",
     "author": "panyiwei-home",
-    "version": "null",
-    "url": "",
+    "version": "N0.2",
+    "url": "https://github.com/panyiwei-home/Freedeck/releases/download/N0.2/NewFreedeck.v.0.2.SourceCOde.zip",
     "manifest": "https://raw.githubusercontent.com/fivedays5/freedecky-store/main/freedeck_manifest.json"
   }
 ]
